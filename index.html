@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>健康掌中宝 · 中老年常见病指南</title>
+
+<!-- PWA Meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="健康掌中宝">
+<meta name="theme-color" content="#7A9B7E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FDF8F0;
+  --paper: #F5EDE0;
+  --ink: #3D3226;
+  --ink-light: #6B5E4F;
+  --ink-muted: #9B8E7F;
+  --sage: #7A9B7E;
+  --sage-light: #E8F0E6;
+  --sage-dark: #5A7A5E;
+  --cinnabar: #C75B3A;
+  --cinnabar-light: #FDF0EB;
+  --ochre: #D4A853;
+  --ochre-light: #FBF4E5;
+  --jade: #6B9080;
+  --jade-light: #EAF2EE;
+  --shadow-sm: 0 1px 3px rgba(61,50,38,0.06);
+  --shadow-md: 0 4px 16px rgba(61,50,38,0.08);
+  --shadow-lg: 0 8px 32px rgba(61,50,38,0.10);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --font-display: 'Noto Serif SC', serif;
+  --font-body: 'Noto Sans SC', sans-serif;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.8;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(122,155,126,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 90%, rgba(212,168,83,0.05) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(61,50,38,0.008) 2px, rgba(61,50,38,0.008) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  padding: 40px 24px 32px;
+  text-align: center;
+}
+
+.header-decoration {
+  display: inline-block;
+  margin-bottom: 16px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.header-decoration svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.7;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.header .subtitle {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+}
+
+.header .divider {
+  width: 48px;
+  height: 3px;
+  background: var(--ochre);
+  margin: 20px auto 0;
+  border-radius: 2px;
+}
+
+.category-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, var(--cream) 60%, transparent);
+  padding: 8px 16px 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 22px;
+  border: 1.5px solid transparent;
+  border-radius: 50px;
+  background: var(--paper);
+  color: var(--ink-light);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.category-btn:hover {
+  background: #EDE5D8;
+  transform: translateY(-1px);
+}
+
+.category-btn.active {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: var(--shadow-md);
+}
+
+.category-btn .icon {
+  margin-right: 6px;
+  font-size: 1.1rem;
+  vertical-align: -1px;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.disease-section {
+  margin-bottom: 24px;
+  animation: cardIn 0.6s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.disease-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(61,50,38,0.06);
+  transition: var(--transition);
+}
+
+.disease-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.disease-header {
+  padding: 28px 28px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.disease-header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.disease-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.disease-icon.heart { background: var(--cinnabar-light); }
+.disease-icon.brain { background: var(--jade-light); }
+.disease-icon.stomach { background: var(--ochre-light); }
+
+.disease-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.disease-brief {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+.expand-indicator {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+  font-size: 1.2rem;
+  color: var(--ink-muted);
+}
+
+.disease-card.expanded .expand-indicator {
+  transform: rotate(180deg);
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.disease-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.disease-card.expanded .disease-detail {
+  max-height: 4000px;
+}
+
+.detail-inner {
+  padding: 0 28px 28px;
+}
+
+.info-block {
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  border-radius: var(--radius-md);
+  position: relative;
+  animation: fadeSlide 0.5s ease both;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.info-block:nth-child(1) { animation-delay: 0.05s; }
+.info-block:nth-child(2) { animation-delay: 0.10s; }
+.info-block:nth-child(3) { animation-delay: 0.15s; }
+.info-block:nth-child(4) { animation-delay: 0.20s; }
+.info-block:nth-child(5) { animation-delay: 0.25s; }
+
+.info-block.explain {
+  background: linear-gradient(135deg, #F8F4EC, #FDF9F4);
+  border-left: 4px solid var(--ochre);
+}
+
+.info-block.daily {
+  background: linear-gradient(135deg, #EEF4ED, #F4F8F2);
+  border-left: 4px solid var(--sage);
+}
+
+.info-block.diet {
+  background: linear-gradient(135deg, #FDF6ED, #FEF9F3);
+  border-left: 4px solid var(--ochre);
+}
+
+.info-block.medication {
+  background: linear-gradient(135deg, #FDF0EB, #FEF5F2);
+  border-left: 4px solid var(--cinnabar);
+}
+
+.info-block.warning {
+  background: linear-gradient(135deg, #FFF5F0, #FFF8F5);
+  border-left: 4px solid #E05540;
+}
+
+.info-block-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-block-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info-block.explain .dot { background: var(--ochre); }
+.info-block.daily .dot { background: var(--sage); }
+.info-block.diet .dot { background: var(--ochre); }
+.info-block.medication .dot { background: var(--cinnabar); }
+.info-block.warning .dot { background: #E05540; }
+
+.info-block p {
+  font-size: 0.92rem;
+  color: var(--ink-light);
+  line-height: 1.9;
+}
+
+.info-block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-block ul li {
+  font-size: 0.92rem;
+  color: var(--ink-light);
+  line-height: 1.9;
+  padding: 4px 0 4px 20px;
+  position: relative;
+}
+
+.info-block ul li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  opacity: 0.4;
+}
+
+.warning-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #FFF0EC;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  font-size: 0.88rem;
+  color: #B84532;
+  font-weight: 500;
+  animation: pulse-warn 2s ease-in-out infinite;
+}
+
+@keyframes pulse-warn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(199,91,58,0.15); }
+  50% { box-shadow: 0 0 0 8px rgba(199,91,58,0); }
+}
+
+.warning-alert .alert-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px 60px;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer .disclaimer {
+  max-width: 500px;
+  margin: 0 auto 16px;
+  line-height: 1.6;
+}
+
+.footer .brand {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--ink-light);
+  letter-spacing: 0.06em;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  box-shadow: var(--shadow-md);
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: var(--transition);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--sage-dark);
+  transform: translateY(-3px);
+}
+
+.search-wrap {
+  max-width: 500px;
+  margin: 0 auto 28px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  border: 1.5px solid rgba(61,50,38,0.1);
+  border-radius: 50px;
+  background: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-input:focus {
+  border-color: var(--sage);
+  box-shadow: 0 0 0 4px rgba(122,155,126,0.1);
+}
+
+.search-input::placeholder {
+  color: var(--ink-muted);
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.no-results {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+
+.no-results .no-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.7rem; }
+  .header { padding: 28px 16px 24px; }
+  .disease-header { padding: 22px 20px 16px; }
+  .detail-inner { padding: 0 20px 22px; }
+  .info-block { padding: 16px 18px; }
+  .disease-name { font-size: 1.15rem; }
+  .category-btn { font-size: 0.82rem; padding: 8px 16px; }
+}
+
+@media print {
+  .category-nav, .back-to-top, .search-wrap { display: none; }
+  .disease-detail { max-height: none !important; }
+  .disease-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  body { background: white; }
+  body::before { display: none; }
+}
+</style>
+
+<meta property="og:title" content="健康掌中宝 · 中老年常见病指南">
+<meta property="og:description" content="高血压、糖尿病、冠心病、中风等33种常见病，一看就懂的通俗指南">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="健康掌中宝">
+<meta name="description" content="中老年常见病通俗指南，涵盖心脑血管、代谢、消化、呼吸、骨关节、神经、精神心理、感官、泌尿、肿瘤等类目">
+
+<meta property="og:title" content="健康掌中宝 · 中老年常见病指南">
+<meta property="og:description" content="高血压、糖尿病、冠心病、中风等33种常见病，一看就懂的通俗指南">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="健康掌中宝">
+<meta name="description" content="中老年常见病通俗指南，涵盖心脑血管、代谢、消化、呼吸、骨关节、神经、精神心理、感官、泌尿、肿瘤等类目">
+</head>
+<body>
+
+<header class="header foldable-top" id="topArea">
+  <div class="header-decoration">
+    <svg viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+      <path d="M24 12 C24 12 16 20 16 26 C16 30.4 19.6 34 24 34 C28.4 34 32 30.4 32 26 C32 20 24 12 24 12Z" fill="#7A9B7E" opacity="0.5"/>
+      <circle cx="22" cy="25" r="2" fill="#C75B3A" opacity="0.6"/>
+      <circle cx="27" cy="25" r="2" fill="#C75B3A" opacity="0.6"/>
+      <path d="M21 30 Q24 33 27 30" stroke="#D4A853" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>健康掌中宝</h1>
+  <p class="subtitle">中老年常见病 · 一看就懂的指南</p>
+  <div class="divider"></div>
+</header>
+
+<div class="sticky-minibar" id="minibar">
+  <button class="back-arrow" id="backBtn" title="返回列表">✕</button>
+  <span class="current-title" id="minibarTitle"></span>
+</div>
+
+<div class="main">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="搜索疾病名称或症状…" autocomplete="off">
+    <button class="voice-btn" id="voiceSearchBtn" title="语音搜索">🎤</button>
+    <button class="voice-btn" id="voiceSearchBtn" title="语音搜索">🎤</button>
+  </div>
+  <div class="voice-status" id="voiceStatus"></div>
+  <div class="voice-status" id="voiceStatus"></div>
+</div>
+
+<nav class="category-nav foldable-top" id="categoryNav">
+  <button class="category-btn active" data-category="all"><span class="icon">📋</span>全部</button>
+  <button class="category-btn" data-category="heart"><span class="icon">❤️</span>心脑血管</button>
+  <button class="category-btn" data-category="brain"><span class="icon">🧠</span>脑血管</button>
+  <button class="category-btn" data-category="stomach"><span class="icon">🍽️</span>消化系统</button>
+  <button class="category-btn" data-category="metabolic"><span class="icon">⚡</span>代谢</button>
+  <button class="category-btn" data-category="respiratory"><span class="icon">🫁</span>呼吸</button>
+  <button class="category-btn" data-category="nerve"><span class="icon">🧬</span>神经</button>
+  <button class="category-btn" data-category="bone"><span class="icon">🦴</span>骨关节</button>
+  <button class="category-btn" data-category="mental"><span class="icon">💙</span>心理</button>
+  <button class="category-btn" data-category="sensory"><span class="icon">👁️</span>感官</button>
+  <button class="category-btn" data-category="urinary"><span class="icon">🚻</span>泌尿</button>
+  <button class="category-btn" data-category="tumor"><span class="icon">🔬</span>肿瘤</button>
+</nav>
+
+<div class="ad-placeholder banner">📢 广告位 640×80</div>
+
+<main class="main" id="diseaseContainer"></main>
+
+<div class="ad-placeholder bottom">📢 广告位 640×80</div>
+
+<footer class="footer">
+  <p class="disclaimer">⚠️ 本指南仅供健康知识参考，不能替代医生的专业诊断和治疗。如有身体不适，请及时就医。</p>
+  <p class="brand">健康掌中宝 · 关爱家人健康</p>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="回到顶部">↑</button>
+
+<script>
+// 健康掌中宝 - 完整疾病数据库
+const diseases = [
+{
+    id: 'hypertension',
+    category: 'heart',
+    icon: '❤️',
+    iconClass: 'heart',
+    name: '高血压',
+    brief: '血压长期高于正常值，俗称"沉默的杀手"，很多老人得了自己都不知道。',
+    explain: '高血压就是血管里的压力太高了。您可以想象成水管里的水压太大，时间长了水管就容易老化、破裂。血压高了，心脏就要更费力地泵血，血管壁也一直受着高压的冲击，久而久之心脏会变"累"，血管也会变硬变脆。',
+    daily: [
+      '每天早晚各量一次血压，记在本子上，看病时带给医生看',
+      '少吃盐！每天吃的盐不要超过一个啤酒瓶盖的量（约6克）',
+      '保持心情平和，不要大喜大悲，生气时血压会一下子飙高',
+      '戒烟戒酒，烟酒都会让血压升高',
+      '天冷时注意保暖，冷天血管收缩，血压容易升高',
+      '大便时不要用力憋气，容易引发危险'
+    ],
+    diet: [
+      '多吃：芹菜、菠菜、西红柿、香蕉、木耳、海带、燕麦、红薯',
+      '少吃：咸菜、腊肉、酱油、味精、火锅底料（这些都是"隐形盐"大户）',
+      '每天吃盐不超过6克，大概一个啤酒瓶盖去掉胶垫那么多',
+      '适当补钾：香蕉、土豆、豆类都含钾丰富，能帮助降血压',
+      '运动：每天散步30-40分钟，太极拳、八段锦都很好，不要做剧烈运动',
+      '运动时间选在下午或傍晚，早上血压本来就偏高，不宜太早锻炼'
+    ],
+    medication: [
+      '降压药要天天吃，不能"血压高了吃，不高就不吃"，这样血压忽高忽低最伤血管',
+      '不要自己随便停药或换药，一定要听医生的',
+      '吃药时间要固定，最好每天同一时间吃',
+      '有些降压药会引起干咳或脚肿，如果出现这些情况告诉医生，不要自己忍着',
+      '定期去医院复查肝肾功能和电解质，吃降压药需要监测这些指标'
+    ],
+    warning: '如果出现剧烈头痛、恶心呕吐、视力模糊、一边手脚发麻无力、说话不清楚、胸口闷痛，这些可能是中风或心梗的前兆，要立刻打120，不要自己走路去医院！'
+  },
+{
+    id: 'chd',
+    category: 'heart',
+    icon: '💓',
+    iconClass: 'heart',
+    name: '冠心病',
+    brief: '给心脏供血的血管变窄或堵住了，心脏"吃不饱"就会出问题。',
+    explain: '心脏就像身体的"水泵"，它自己也需要血液来提供能量。给心脏供血的血管叫冠状动脉。如果这些血管里堆积了"垃圾"（脂肪、胆固醇等），血管就会变窄，心脏得到的血液就少了。轻的时候会胸闷胸痛，严重时血管完全堵死，心脏的一部分就会"饿死"，这就是心梗，非常危险。',
+    daily: [
+      '避免突然用力：搬重物、猛起猛坐都要慢一点',
+      '保持大便通畅，便秘时用力排便会给心脏增加很大负担',
+      '注意保暖，冷风一吹血管收缩，容易诱发心绞痛',
+      '情绪要稳定，激动、生气、过度高兴都可能诱发',
+      '随身携带急救药（如硝酸甘油），放在容易拿到的地方',
+      '洗澡水温不要太高，时间不要太长，浴室要通风'
+    ],
+    diet: [
+      '多吃：深海鱼（三文鱼、带鱼）、燕麦、坚果、橄榄油、新鲜蔬菜水果',
+      '少吃：肥肉、动物内脏、油炸食品、奶油蛋糕（这些含"坏脂肪"多）',
+      '鸡蛋可以吃，但一天不要超过一个',
+      '用植物油炒菜，少用猪油、黄油',
+      '运动：散步是最好的运动，从慢到快，以不感到累为准',
+      '每次运动20-30分钟，一周坚持5天以上，天气不好时在室内活动'
+    ],
+    medication: [
+      '阿司匹林和他汀类药物是基础用药，即使感觉好了也要坚持吃',
+      '硝酸甘油是急救药，舌下含服，不要吞下去',
+      '如果含服硝酸甘油5分钟后胸痛不缓解，可以再含一片，再不行马上打120',
+      '不要自己随便买"通血管"的保健品替代正规药物',
+      '定期复查血脂、血糖、心电图，看药物效果好不好'
+    ],
+    warning: '胸口压榨样疼痛、闷痛，像有块大石头压着，疼痛可能串到左肩、后背、下巴，同时出冷汗、恶心、喘不上气——这很可能是心梗，立即打120！在等救护车时保持安静坐着或半躺着，不要走动。'
+  },
+{
+    id: 'hyperlipidemia',
+    category: 'heart',
+    icon: '🩸',
+    iconClass: 'heart',
+    name: '高血脂',
+    brief: '血液里的"油"太多了，时间长了会把血管堵住。',
+    explain: '血脂就是血液里的脂肪类物质，主要包括胆固醇和甘油三酯。它们本来是身体需要的，但如果太多了，就会像水管里的水垢一样，慢慢沉积在血管壁上，让血管变窄变硬。这个过程很慢，平时感觉不到，但等到血管堵到一定程度，心梗、脑梗就来了。',
+    daily: [
+      '每年至少查一次血脂，空腹抽血最准确',
+      '控制体重，肚子大的人更容易血脂高',
+      '晚饭不要吃太晚太饱，夜间代谢慢，多余的热量容易变成血脂',
+      '戒烟，吸烟会让"好胆固醇"减少、"坏胆固醇"增多',
+      '少喝酒，酒精会直接升高甘油三酯'
+    ],
+    diet: [
+      '多吃：燕麦、荞麦、豆制品、深海鱼、核桃、杏仁、各种蔬菜',
+      '每天吃一把坚果（约手心一小把），但不要吃太多，坚果本身也含油',
+      '少吃：肥肉、猪油、奶油、油炸食品、甜点、含糖饮料',
+      '炒菜少放油，多用蒸、煮、炖、凉拌的方式',
+      '运动：快走、慢跑、游泳、骑车都很好，每次40分钟以上',
+      '坚持运动才能看到降血脂的效果，三天打鱼两天晒网是不行的'
+    ],
+    medication: [
+      '他汀类药物是降血脂的主力，一般晚上吃效果更好',
+      '吃药期间如果出现肌肉酸痛、无力，要告诉医生',
+      '降血脂是长期的事，即使血脂正常了也不要自己停药',
+      '不要相信"吃保健品就能降血脂"的说法，该吃药就要吃药',
+      '定期复查肝功能和肌酶，确保药物没有伤肝伤肌肉'
+    ],
+    warning: '高血脂本身没有明显症状，但如果你突然出现视力模糊（眼底血管堵了）、走路腿疼（下肢血管堵了）、或者体检发现血脂特别高，一定要重视并就医。'
+  },
+{
+    id: 'arrhythmia',
+    category: 'heart',
+    icon: '💗',
+    iconClass: 'heart',
+    name: '心律失常',
+    brief: '心跳的节律出了问题，有时太快、太慢或者跳得不规律。',
+    explain: '心脏有一套自己的"电路系统"来控制心跳。正常情况下心跳规律有力，但如果这套电路出了问题，心跳就可能变得太快、太慢或者乱跳。最常见的是房颤（心房乱颤），就像心脏在"发抖"而不是正常跳动，容易在心脏里形成血块，血块掉下来跑到脑子里就是脑梗。',
+    daily: [
+      '学会摸自己的脉搏，每天数一数心跳次数和节律',
+      '少喝浓茶、咖啡，这些会刺激心脏',
+      '保证充足睡眠，熬夜和劳累最容易诱发心律失常',
+      '避免情绪激动，心平气和很重要',
+      '如果装了起搏器，要远离强磁场（如电磁炉、磁共振检查）',
+      '记录每次发作的时间、感觉、持续多久，给医生参考'
+    ],
+    diet: [
+      '多吃：香蕉、西红柿、菠菜、豆类（含钾镁丰富，对心脏电路有好处）',
+      '多吃粗粮杂粮，少吃精米白面',
+      '少吃：咸菜、腊肉、动物内脏、油炸食品',
+      '不要暴饮暴食，吃太撑会压迫心脏',
+      '运动：适度运动有好处，但不要剧烈运动',
+      '散步、太极、瑜伽都合适，运动时如果感到心慌要马上停下来休息'
+    ],
+    medication: [
+      '抗心律失常药一定要按时按量吃，不能自己加减',
+      '如果是房颤，医生可能会开抗凝药（如华法林），这是为了预防中风',
+      '吃华法林要定期抽血查凝血指标，很多食物和药物会影响华法林效果',
+      '吃抗凝药期间注意不要磕碰受伤，因为血不容易凝固',
+      '有些心律失常用药需要住院观察调整，不要嫌麻烦'
+    ],
+    warning: '如果突然心跳特别快（超过120次/分钟）、感觉心慌头晕、眼前发黑、晕倒、或者胸口疼痛，要立即就医。房颤患者如果突然出现一边手脚不能动、说话不清，可能是中风了，马上打120！'
+  },
+{
+    id: 'heartfailure',
+    category: 'heart',
+    icon: '🫀',
+    iconClass: 'heart',
+    name: '心力衰竭',
+    brief: '心脏的泵血能力变弱了，身体各处得不到足够的血液供应。',
+    explain: '心脏就像一个水泵，心力衰竭不是说心脏不跳了，而是泵的力量不够了。就像水泵用久了功率下降，水抽不上来。心脏泵血少了，身体就会"缺水缺氧气"，人会感到累、喘不上气；同时血液回流不畅，水会积在身体里，出现腿肿、肚子胀。',
+    daily: [
+      '每天称体重！早上起床排尿后空腹称，如果两天内体重增加2斤以上，说明身体里积水多了',
+      '记录每天的尿量，尿量明显减少要警惕',
+      '睡觉时把枕头垫高一点，有助于呼吸顺畅',
+      '注意保暖，感冒会加重心衰',
+      '不要一下子喝太多水，少量多次',
+      '避免过度劳累，做家务也要量力而行'
+    ],
+    diet: [
+      '严格控制盐！每天不超过3克（比高血压患者还要少）',
+      '控制喝水：根据医生建议，一般每天不超过1500毫升（包括汤、粥里的水）',
+      '多吃：鸡蛋、鱼肉、瘦肉（补充蛋白质，但不要吃太多）',
+      '多吃含钾的食物：香蕉、橙子、土豆、菠菜',
+      '少吃多餐，不要一次吃太饱',
+      '运动：在医生指导下进行，从很轻的活动开始，如慢走5-10分钟',
+      '感觉累了就休息，不要勉强'
+    ],
+    medication: [
+      '心衰的用药方案比较复杂，通常需要好几种药一起吃',
+      '利尿剂（排水药）早上吃，避免晚上起夜影响睡眠',
+      '不要因为感觉好一些就自己停药，心衰是慢性病需要长期管理',
+      '吃药期间注意监测血压和心率，太低也要告诉医生',
+      '定期复查心脏彩超，看看心脏功能有没有改善'
+    ],
+    warning: '如果出现：喘不上气、不能平躺（一躺下就喘）、腿脚明显水肿、尿量明显减少、咳出粉红色泡沫痰——这些是心衰急性加重的信号，必须马上去医院！'
+  },
+{
+    id: 'stroke',
+    category: 'brain',
+    icon: '🧠',
+    iconClass: 'brain',
+    name: '脑卒中（中风）',
+    brief: '脑子的血管要么堵了要么破了，导致脑细胞受损，是很危险的急症。',
+    explain: '中风分两种：一种是血管堵了（脑梗死），就像水管堵了水流不过去；一种是血管破了（脑出血），就像水管爆了水漫出来。不管是哪种，脑子里的细胞都会因为缺血缺氧而受损。脑子管着全身的活动，所以中风后可能出现手脚动不了、说话不清、嘴歪眼斜等情况。',
+    daily: [
+      '控制好血压、血糖、血脂，这是预防中风最重要的三件事',
+      '房颤患者一定要按医嘱吃抗凝药，房颤是脑梗的重要原因',
+      '戒烟戒酒，吸烟让中风风险翻倍',
+      '冬天起床要慢：醒来后先在床上躺两分钟，坐起来再等两分钟，然后慢慢站起来',
+      '保持大便通畅，用力排便可能诱发脑出血',
+      '定期体检，做颈动脉超声看看脖子上的血管有没有斑块'
+    ],
+    diet: [
+      '多吃：绿叶蔬菜、水果、全谷物、豆类、深海鱼',
+      '每天吃够一斤蔬菜半斤水果',
+      '少吃：咸菜、加工肉（火腿肠、培根）、油炸食品、甜饮料',
+      '用橄榄油、菜籽油等植物油替代猪油',
+      '运动：每周至少5天，每天30分钟中等强度运动',
+      '快走、游泳、骑车、跳广场舞都很好'
+    ],
+    medication: [
+      '预防中风的药物（降压药、降脂药、抗血小板药）要长期坚持吃',
+      '如果医生开了阿司匹林或氯吡格雷，不要自己随便停',
+      '房颤患者吃抗凝药非常重要，不要因为怕出血就不吃',
+      '不要相信"定期输液通血管"能预防中风，没有科学依据',
+      '发生过中风的患者，二级预防用药更要坚持，复发风险很高'
+    ],
+    warning: '记住"120"口诀识别中风：1看脸（有没有歪斜），2查手臂（能不能平举），0听语言（说话清不清楚）。出现任何一个异常，立刻打120！中风抢救有"黄金4.5小时"，越早到医院越好，千万不要在家等着看能不能自己好！'
+  },
+{
+    id: 'tia',
+    category: 'brain',
+    icon: '⚡',
+    iconClass: 'brain',
+    name: '短暂性脑缺血（小中风）',
+    brief: '脑子暂时性缺血，症状像中风但很快恢复，是中风的重要预警。',
+    explain: '小中风就像一次"彩排"——症状和中风一样（手脚发麻、说话不清、视力模糊等），但通常在几分钟到一小时内就恢复正常了。很多人觉得"好了就没事了"，这是最危险的！小中风发生后，近期发生真正大中风的风险非常高，是老天爷给的一次"警告"。',
+    daily: [
+      '一旦发生过小中风，必须高度重视，马上去医院检查',
+      '全面检查血压、血糖、血脂、心脏、颈动脉',
+      '严格按医嘱进行二级预防，不能有侥幸心理',
+      '戒烟戒酒，这是最基本的要求',
+      '避免突然转头、猛地站起来，动作都要慢',
+      '告诉家人你发生过小中风，让他们也了解中风急救知识'
+    ],
+    diet: [
+      '和中风的饮食建议一样，低盐低脂，多吃蔬菜水果',
+      '特别注意：不要吃太咸，盐会让血压升高',
+      '多吃：洋葱、大蒜、黑木耳（有助于防止血栓形成）',
+      '多喝水，尤其是早上起床后喝一杯温水，血液太稠容易形成血栓',
+      '运动：适度运动有好处，但要避免剧烈运动',
+      '散步、打太极都是安全的选择'
+    ],
+    medication: [
+      '医生通常会开阿司匹林等抗血小板药，一定要坚持吃',
+      '同时要控制好血压和血脂，可能需要吃降压药和降脂药',
+      '不要因为"现在没事了"就自己停药',
+      '定期复查，让医生评估预防方案是否有效',
+      '如果吃药期间出现牙龈出血、皮肤瘀斑增多，告诉医生'
+    ],
+    warning: '小中风本身就是最重要的预警信号！发生过小中风后，如果再次出现任何中风症状（哪怕只有几分钟），不要等，立刻打120！另外，如果小中风发作越来越频繁，说明风险在增加，要尽快就医调整治疗方案。'
+  },
+{
+    id: 'dementia',
+    category: 'brain',
+    icon: '📝',
+    iconClass: 'brain',
+    name: '老年痴呆（认知障碍）',
+    brief: '大脑功能慢慢退化，记性变差、反应变慢，严重时连家人都不认识。',
+    explain: '老年痴呆不是正常衰老，而是一种脑部疾病。最常见的是阿尔茨海默病，大脑里的神经细胞慢慢减少，就像一台电脑的零件一个一个坏掉。最开始只是记性不好，后来会越来越严重，影响日常生活。虽然目前还不能根治，但早发现、早干预可以延缓病情发展。',
+    daily: [
+      '保持大脑活跃：看书读报、下棋打牌、学新东西（如用智能手机）',
+      '多和人交流，不要整天一个人待着，孤独会加速大脑退化',
+      '保持规律的生活作息，固定的吃饭、睡觉时间',
+      '家里物品放在固定位置，不要经常变动，方便老人找到',
+      '在门口装个提醒装置，防止老人走失',
+      '家人要多些耐心，不要因为老人重复问问题就发脾气'
+    ],
+    diet: [
+      '多吃：深海鱼、核桃、蓝莓、西兰花、鸡蛋（这些对大脑有好处）',
+      '多吃绿叶蔬菜，每天至少一盘',
+      '少吃：油炸食品、甜食、加工食品',
+      '适量喝绿茶，绿茶中的成分对大脑有保护作用',
+      '运动：散步、太极、手指操（活动手指能刺激大脑）',
+      '每天坚持活动，哪怕只是在家来回走走也好'
+    ],
+    medication: [
+      '目前有一些药物可以改善症状或延缓病情，但需要医生评估后使用',
+      '这些药物不能根治，但能帮助维持一段时间的生活能力',
+      '吃药要有人监督，老人自己可能忘记吃或重复吃',
+      '不要相信"特效药""祖传秘方"能治愈老年痴呆',
+      '定期复诊，让医生评估病情变化和药物效果'
+    ],
+    warning: '如果老人出现：经常忘记刚发生的事、在熟悉的地方迷路、性格突然大变（温和的人变得暴躁或多疑）、分不清白天黑夜、生活完全不能自理——这些提示病情在加重，需要及时就医评估。如果老人突然出现意识不清、胡言乱语，可能是谵妄或其他急症，要马上去医院。'
+  },
+{
+    id: 'gastritis',
+    category: 'stomach',
+    icon: '🔥',
+    iconClass: 'stomach',
+    name: '慢性胃炎',
+    brief: '胃的内壁长期发炎，很多人都有，但如果不注意会越来越严重。',
+    explain: '胃就像一个"食物加工袋"，内壁有一层保护膜（胃黏膜）。慢性胃炎就是这层保护膜长期受到刺激，变得红肿、变薄甚至破损。常见原因有：吃得太刺激（辣、烫、酒）、长期吃伤胃的药、还有幽门螺杆菌感染。很多人症状不明显，但胃镜下一看问题不少。',
+    daily: [
+      '三餐定时定量，不要饥一顿饱一顿',
+      '吃饭细嚼慢咽，每口饭嚼20下以上',
+      '不要吃太烫的食物，烫的食物直接伤胃黏膜',
+      '戒烟戒酒，烟酒是伤胃的两大元凶',
+      '保持心情舒畅，焦虑和压力会让胃病加重',
+      '如果长期吃阿司匹林或止痛药，要问医生是否需要同时吃护胃的药'
+    ],
+    diet: [
+      '多吃：小米粥、山药、南瓜、馒头、面条（这些温和养胃）',
+      '多吃蒸煮的食物，少吃煎炸烧烤',
+      '少吃：辣椒、大蒜、醋、浓茶、咖啡（刺激胃黏膜）',
+      '少吃：酸菜、咸菜、腊肉（含亚硝酸盐，对胃不好）',
+      '不要空腹吃太酸的水果（山楂、柠檬等）',
+      '运动：饭后散步20分钟，有助于消化，但不要饭后马上剧烈运动',
+      '揉肚子：顺时针轻轻揉肚子，每天早晚各5分钟，有助于胃肠蠕动'
+    ],
+    medication: [
+      '如果有幽门螺杆菌感染，要按医生的方案规范杀菌，一般吃两周药',
+      '杀菌药一定要吃完整个疗程，不能中途停药，否则细菌会产生耐药性',
+      '胃黏膜保护剂（如铝碳酸镁）在饭前或饭后吃，要看说明书',
+      '抑制胃酸的药（如奥美拉唑）一般早饭前吃',
+      '不要长期自己买胃药吃，有些胃药长期吃有副作用'
+    ],
+    warning: '如果出现：黑便（像柏油一样黑亮）、呕血或呕吐物像咖啡渣、不明原因的消瘦、吞咽食物越来越困难、上腹部持续疼痛不缓解——这些可能是胃出血或胃癌的警示信号，必须尽快做胃镜检查！'
+  },
+{
+    id: 'ulcer',
+    category: 'stomach',
+    icon: '🩹',
+    iconClass: 'stomach',
+    name: '消化性溃疡',
+    brief: '胃或十二指肠的内壁上出现了"伤口"，就像口腔溃疡长在了胃里。',
+    explain: '胃溃疡就是胃壁上破了一个口子，十二指肠溃疡是小肠开头的地方破了口子。原因和胃炎类似，但更严重。胃酸会不断刺激这个"伤口"，所以会疼，尤其是饿的时候和半夜疼得更明显。如果不治疗，溃疡可能穿孔（胃壁上破个洞）或出血，非常危险。',
+    daily: [
+      '吃饭要规律，少食多餐，不要让胃空太久',
+      '胃酸多的时候可以吃点苏打饼干或喝点温牛奶中和一下',
+      '绝对戒烟戒酒，烟酒会严重影响溃疡愈合',
+      '学会减压，精神紧张会让胃酸分泌增多',
+      '睡眠要充足，熬夜会影响胃黏膜的修复',
+      '不要乱吃止痛药（如布洛芬、阿司匹林），这些药会加重溃疡'
+    ],
+    diet: [
+      '多吃：软米饭、烂面条、蒸蛋羹、土豆泥、南瓜泥（容易消化）',
+      '适量吃：蜂蜜（有助于溃疡愈合）、卷心菜汁（传统养胃方）',
+      '少吃：辣椒、大蒜、醋、柠檬等刺激性食物',
+      '少吃：油炸、烧烤、腌制食品',
+      '不要喝浓茶、咖啡、碳酸饮料',
+      '运动：适度运动有好处，但不要剧烈运动',
+      '饭后一小时再运动，空腹运动可能诱发疼痛'
+    ],
+    medication: [
+      '治疗溃疡通常需要吃抑酸药（减少胃酸）和保护胃黏膜的药',
+      '如果有幽门螺杆菌，必须先杀菌，否则溃疡容易反复发作',
+      '一般需要连续吃药4-8周，不要症状好了就停药',
+      '吃药时间要遵医嘱，抑酸药通常饭前吃',
+      '治疗后要复查，确认溃疡是否愈合'
+    ],
+    warning: '如果出现：突然剧烈腹痛（像刀割一样）、肚子变得又硬又痛、呕血或黑便、头晕心慌出冷汗（可能是内出血）——这些是溃疡穿孔或大出血的征兆，是急症，立刻打120！不要吃东西喝水，等救护车。'
+  },
+{
+    id: 'reflux',
+    category: 'stomach',
+    icon: '⬆️',
+    iconClass: 'stomach',
+    name: '胃食管反流',
+    brief: '胃里的东西往上返流到食管，引起烧心、反酸，胸口不舒服。',
+    explain: '胃和食管之间有一道"门"（贲门），正常情况下只让食物往下走，不让胃里的东西往上返。如果这道"门"松了关不紧，胃酸就会返流到食管里。食管不像胃那样有保护膜，被胃酸一烧就会难受，感觉胸口烧得慌、嘴里发酸，时间长了还会损伤食管。',
+    daily: [
+      '吃完饭不要马上躺下，至少等2-3小时再躺',
+      '睡觉时把床头抬高15-20厘米（垫高上半身，不只是垫高枕头）',
+      '不要穿太紧的衣服和裤子，会压迫肚子',
+      '减肥，肚子大的人腹压高，更容易反流',
+      '戒烟，吸烟会让那道"门"更松',
+      '保持大便通畅，便秘时用力排便会增加腹压'
+    ],
+    diet: [
+      '少食多餐，每顿吃七分饱，不要吃撑',
+      '少吃：油炸食品、巧克力、薄荷、浓茶、咖啡（这些会让"门"更松）',
+      '少吃：橘子、柠檬、番茄、醋（太酸的食物刺激食管）',
+      '少吃：红薯、韭菜、年糕（容易产气或不好消化的食物）',
+      '睡前3小时不要吃东西，包括水果和零食',
+      '运动：饭后散步有好处，但不要弯腰、下蹲等压迫肚子的动作',
+      '做一些放松的伸展运动，不要做仰卧起坐之类的腹部运动'
+    ],
+    medication: [
+      '抑酸药（如奥美拉唑）是主要治疗药物，一般早饭前30分钟吃',
+      '胃动力药（如莫沙必利）帮助胃排空，饭前吃',
+      '黏膜保护剂（如铝碳酸镁）可以中和反流上来的胃酸',
+      '一般需要连续吃药4-8周，不要断断续续',
+      '如果长期需要吃药控制，要定期复查，和医生讨论是否需要长期维持治疗'
+    ],
+    warning: '如果出现：吞咽食物越来越困难、吃东西时胸口疼痛、不明原因的体重下降、呕血或黑便、长期声音嘶哑或慢性咳嗽找不到原因——这些可能是反流导致了严重的食管损伤或其他问题，需要尽快做胃镜检查。'
+  },
+{
+    id: 'constipation',
+    category: 'stomach',
+    icon: '💩',
+    iconClass: 'stomach',
+    name: '慢性便秘',
+    brief: '大便干结、排便困难或排便次数太少，是很多中老年人的难言之隐。',
+    explain: '便秘不是小问题！食物残渣在大肠里待太久，水分被吸干了，大便就变得又干又硬，排不出来。中老年人肠道蠕动变慢，加上活动少、喝水少、蔬菜吃得少，就容易便秘。长期便秘不仅难受，还可能诱发痔疮、肛裂，甚至用力排便时诱发心梗或脑出血。',
+    daily: [
+      '养成定时排便的习惯，每天固定时间去厕所，哪怕没有便意也坐一会儿',
+      '有便意就马上去厕所，不要憋着，憋久了便意就没了',
+      '每天喝够水！至少1500-2000毫升（约8杯水），早上起床先喝一杯温水',
+      '多吃粗纤维食物：蔬菜、水果、粗粮、豆类',
+      '不要长期依赖泻药或通便茶，会让肠道变"懒"',
+      '排便时不要玩手机看报纸，专心排便，不超过10分钟'
+    ],
+    diet: [
+      '多吃：红薯、玉米、燕麦、芹菜、韭菜、火龙果、猕猴桃、西梅',
+      '每天吃一斤蔬菜，其中一半是绿叶蔬菜',
+      '主食不要只吃精米白面，加一些糙米、燕麦、荞麦',
+      '适量吃些坚果（核桃、杏仁），里面的油脂有助于润滑肠道',
+      '喝酸奶或补充益生菌，有助于改善肠道环境',
+      '运动：每天走路30分钟以上，促进肠道蠕动',
+      '揉肚子：顺时针方向揉肚子，早晚各10分钟，力度适中',
+      '做提肛运动：收紧肛门再放松，每天做50-100次'
+    ],
+    medication: [
+      '如果通过饮食和运动调整2周仍没有改善，可以看医生',
+      '医生可能会开乳果糖或聚乙二醇，这些比较安全，不会让肠道依赖',
+      '不要自己长期买番泻叶、芦荟胶囊等刺激性泻药，会让肠道变黑变懒',
+      '有些降压药、止痛药会引起便秘，如果怀疑是药物引起的，告诉医生',
+      '开塞露可以临时救急用，但不要天天用'
+    ],
+    warning: '如果出现：便秘和腹泻交替出现、大便带血或呈黑色、大便变细（像铅笔一样细）、肚子持续疼痛、不明原因的消瘦——这些可能是肠癌的警示信号，一定要尽快做肠镜检查！尤其是50岁以上、有肠癌家族史的人更要重视。'
+  },
+{
+    id: 'ibs',
+    category: 'stomach',
+    icon: '🌊',
+    iconClass: 'stomach',
+    name: '肠易激综合征',
+    brief: '肚子经常不舒服，有时拉肚子有时便秘，检查又查不出大问题。',
+    explain: '肠易激综合征简单说就是"肠道太敏感了"。肠道本身没有严重的病变，但功能出了问题。就像一个人特别容易紧张一样，肠道也特别容易"激动"——稍微吃点凉的、辣的，或者一紧张焦虑，肚子就开始闹腾。这在更年期女性和压力大的人群中很常见。',
+    daily: [
+      '记录"饮食日记"：记下每天吃了什么、什么时候肚子不舒服，找到自己的"雷区"',
+      '学会放松，紧张和焦虑是肠道的大敌',
+      '保证充足睡眠，熬夜会加重症状',
+      '注意腹部保暖，肚子受凉容易诱发',
+      '三餐规律，不要饥一顿饱一顿',
+      '找出自己不耐受的食物（常见的如牛奶、豆类、洋葱等）'
+    ],
+    diet: [
+      '少吃容易产气的食物：豆类、洋葱、卷心菜、红薯、碳酸饮料',
+      '少吃刺激性食物：辣椒、咖啡、酒精、冰冷食物',
+      '少吃高脂肪食物：油炸食品、肥肉、奶油',
+      '多吃温和易消化的食物：粥、面条、蒸蛋、土豆泥',
+      '腹泻型：少吃粗纤维（芹菜、韭菜等），吃些香蕉、苹果泥',
+      '便秘型：多吃粗纤维，多喝水',
+      '运动：散步、瑜伽、太极都有助于缓解',
+      '饭后不要马上剧烈运动，休息半小时再活动'
+    ],
+    medication: [
+      '肠易激综合征没有特效药，主要是对症治疗',
+      '腹泻时可以吃蒙脱石散（思密达），比较安全',
+      '便秘时可以用乳果糖，不要用刺激性泻药',
+      '益生菌可以帮助调节肠道菌群，但效果因人而异',
+      '如果症状严重影响生活，可以看消化科医生，有些调节肠道功能的处方药',
+      '不要自己乱吃抗生素，肠易激不是细菌感染引起的'
+    ],
+    warning: '肠易激综合征本身不是危险疾病，但如果出现以下情况，说明可能不是简单的肠易激：大便带血、夜间被腹痛痛醒、不明原因发烧、体重明显下降、50岁以后才第一次出现这些症状——这些需要做肠镜排除其他疾病。'
+  },
+{id:'diabetes',category:'metabolic',icon:'🍬',iconClass:'metabolic',name:'糖尿病',brief:'血糖太高了，身体不能正常利用糖分，时间长了会损害全身器官。',explain:'糖尿病就是血液里的糖分太多了。胰岛素就像一把"钥匙"，帮糖分进入细胞变成能量。如果钥匙不够或者钥匙不好使了，糖分进不了细胞，全堆在血液里，就像全身泡在糖水里，时间长了血管、神经、眼睛、肾脏都会被"泡坏"。',daily:['每天测血糖并记录下来，空腹和饭后都要测','控制饮食总量，米饭面条也要控制，不只是不吃糖','保护双脚！每天洗脚检查有没有伤口，糖尿病人的脚受伤不容易好','随身带几块糖或饼干，防止低血糖','定期检查眼睛和肾功能，糖尿病会悄悄损害这些器官','戒烟，吸烟加糖尿病，血管损伤翻倍'],diet:['主食定量：每顿饭主食约自己拳头大小，粗细搭配','多吃：绿叶蔬菜、黄瓜、西红柿（含糖少，可以多吃）','适量吃：鱼肉、鸡肉、豆腐、鸡蛋（补充蛋白质）','少吃：甜食、含糖饮料、蜜饯、糕点','水果在两餐之间吃，一次不超过一个拳头大小','运动：饭后半小时散步20-30分钟，帮助降血糖','运动要穿合适的鞋袜，不要光脚运动'],medication:['口服降糖药要按时吃，不要自己加减剂量','如果需要打胰岛素，学会正确的注射方法和部位轮换','注意低血糖！如果出现心慌、出冷汗、手抖、头晕，马上吃糖','定期复查糖化血红蛋白，这是看近三个月血糖控制好不好的重要指标','不要相信"根治糖尿病"的保健品或偏方，糖尿病目前还不能根治'],warning:'如果出现：血糖极高（空腹>13或饭后>20）、恶心呕吐、呼吸有烂苹果味、意识模糊——可能是酮症酸中毒，立刻去急诊！脚上伤口不愈合、颜色发黑，也要马上就医。'},
+{id:'gout',category:'metabolic',icon:'🦶',iconClass:'metabolic',name:'痛风',brief:'血液里尿酸太高，在关节里形成"小针"一样的结晶，疼起来要命。',explain:'痛风是因为血液里的尿酸太多了。尿酸是身体代谢产生的"垃圾"，正常通过小便排出去。如果产生的太多或者排不出去，尿酸就会在关节里形成像针一样的结晶。最常见的是大脚趾突然又红又肿又热又痛，疼得像刀割。海鲜、啤酒、动物内脏是主要诱因。',daily:['多喝水！每天喝2000毫升以上，帮助尿酸排出','控制体重，肥胖的人更容易痛风','避免突然受凉或剧烈运动，这些可能诱发痛风','痛风发作时让关节休息，把脚抬高，不要走路','定期查血尿酸，控制在目标范围内'],diet:['多吃：蔬菜、水果、牛奶、鸡蛋（嘌呤低，放心吃）','适量吃：豆腐、豆浆（研究认为可以适量吃）','少吃或不吃：动物内脏、海鲜（贝类、沙丁鱼）、浓肉汤','绝对不喝：啤酒、白酒（酒精会大幅升高尿酸）','运动：缓解期适度运动，散步、游泳、骑车都很好','痛风发作期不要运动，以休息为主'],medication:['痛风发作时：尽快用秋水仙碱或消炎止痛药，越早效果越好','缓解期：医生可能会开降尿酸药（别嘌醇或非布司他），需长期吃','降尿酸药不要在痛风发作时开始吃，等疼痛缓解后再开始','降尿酸初期可能反而诱发痛风，这是正常现象，坚持吃药','不要痛了就吃药、不痛就停药，降尿酸是长期的事'],warning:'如果痛风反复发作、关节出现硬块（痛风石）、或者腰痛、尿量减少——可能尿酸已损害肾脏，需及时就医。痛风发作伴有发烧，可能是关节感染，也要马上去医院。'},
+{id:'osteoporosis',category:'metabolic',icon:'🦴',iconClass:'metabolic',name:'骨质疏松',brief:'骨头变"糠"了，像被虫蛀了一样疏松脆弱，轻轻一摔就可能骨折。',explain:'骨头不是死的东西，它每天都在"新陈代谢"——旧的骨组织被吸收，新的骨组织长出来。年轻时新长的比吸收的多，骨头结实。老了以后吸收比新长快，骨头就越来越疏松，像空心萝卜。女性绝经后因为雌激素减少，骨质疏松发展更快。最怕的是摔倒，一摔就可能髋部骨折，后果很严重。',daily:['防摔倒！这是最重要的事：家里地上不要有杂物、电线，浴室铺防滑垫','走路用拐杖不丢人，安全第一','不要搬重物、不要站在凳子椅子上取东西','多晒太阳！每天15-20分钟，帮助身体产生维生素D','戒烟限酒，吸烟和过量饮酒都会加速骨量流失'],diet:['多吃：牛奶、酸奶、豆腐、小鱼干、虾皮、芝麻酱（补钙）','每天喝一杯牛奶或酸奶（约300毫升）','多吃：蛋黄、海鱼、蘑菇（补维生素D）','少吃：太咸的食物（盐吃多了会促进钙排出）','少喝浓茶和咖啡（影响钙吸收）','运动：散步、太极、慢走，每天30分钟','靠墙站立、踮脚尖等简单动作也有助于强健骨骼'],medication:['确诊骨质疏松后，医生会开钙片和维生素D','严重的骨质疏松可能需要用特殊药物（如阿仑膦酸钠），需严格按说明服用','钙片最好随饭吃或饭后吃，吸收更好','不要自己乱买"壮骨"保健品，有些含激素反而有害','定期做骨密度检查，看治疗效果'],warning:'如果轻轻一碰就骨折、身高明显变矮（超过3厘米）、驼背越来越严重——这些都是骨质疏松严重的表现。如果摔倒后髋部或腰部剧痛、站不起来，马上打120，不要自己乱动！'},
+{id:'obesity',category:'metabolic',icon:'⚖️',iconClass:'metabolic',name:'肥胖症',brief:'体重严重超标，不只是影响美观，更是百病之源。',explain:'肥胖不是"富态"，是一种病。多余的脂肪不只是堆在肚子上，还会堆在血管里、肝脏里、甚至心脏周围。肥胖的人更容易得高血压、糖尿病、冠心病、中风、关节炎、甚至某些癌症。中老年人代谢变慢，更容易发胖。好消息是，哪怕只减重5%-10%，很多健康指标就会明显改善。',daily:['每周称一次体重，早上空腹称，记下来','设定合理目标：一个月减2-4斤就好，不要追求快速减肥','保证睡眠充足，睡眠不足会让人更想吃东西','吃饭用小碗小盘，视觉上会觉得自己吃了不少','看电视时不要吃零食，不知不觉会吃很多'],diet:['多吃：蔬菜（占每餐一半）、粗粮、豆制品、瘦肉','改变吃饭顺序：先喝汤→吃蔬菜→吃肉→最后吃主食','细嚼慢咽，每口饭嚼20下，大脑需要20分钟才知道"饱了"','少吃：油炸食品、甜饮料、零食、肥肉、动物皮','晚饭尽量早吃、少吃，睡前3小时不进食','运动：快走是最安全有效的运动，每天40-60分钟','从每天10分钟开始，慢慢增加，关键是坚持'],medication:['不要自己买减肥药！很多减肥药含违禁成分，伤心脏伤肝肾','如果体重严重超标且伴有糖尿病等，医生可能会考虑用药或手术','市面上所谓的"排油丸""燃脂茶"大多没有科学依据','减肥没有捷径，健康饮食+坚持运动是唯一安全有效的方法'],warning:'如果出现：睡觉打呼噜严重且呼吸暂停（憋气）、稍微活动就喘不上气、关节疼痛影响走路——这些说明肥胖已经引起严重健康问题，需要就医。不明原因的体重快速下降（一个月超过10斤）也要警惕，可能是其他疾病。'},
+{id:'copd',category:'respiratory',icon:'🫁',iconClass:'respiratory',name:'慢阻肺（老慢支、肺气肿）',brief:'呼吸道长期受损，呼吸越来越费劲，像被掐着脖子一样。',explain:'慢阻肺全称"慢性阻塞性肺疾病"，包括老慢支和肺气肿。简单说就是呼吸道长期被刺激（主要是吸烟），气道变窄、肺组织被破坏，吸进去的气不容易呼出来，肺里总是有很多"废气"。患者会感觉气不够用，走几步路就喘，严重的坐着不动都喘。吸烟是最大的原因。',daily:['戒烟！戒烟！戒烟！这是最重要的一条，什么时候戒都不晚','避免接触二手烟、厨房油烟、空气污染','注意保暖，感冒会诱发急性加重','学会缩唇呼吸：鼻子吸气，嘴巴像吹口哨一样慢慢呼气','接种流感疫苗和肺炎疫苗，预防感染','家里保持通风，湿度适中'],diet:['多吃：鱼、鸡、蛋、牛奶（补充蛋白质，呼吸肌需要力量）','多吃：蔬菜水果（含抗氧化物质，保护肺组织）','少食多餐，吃太饱会顶住膈肌，让呼吸更困难','多喝水，痰液稀一点容易咳出来','少吃容易产气的食物（豆类、红薯、碳酸饮料），肚子胀会影响呼吸','运动：在医生指导下进行肺康复训练','从慢走开始，配合呼吸节奏，以不感到严重气短为准'],medication:['支气管扩张剂（如噻托溴铵）是主要治疗药物，多为吸入剂','吸入剂使用方法要正确，让医生或护士教你怎么用','吸入剂要每天用，即使感觉还好也要坚持','如果急性加重（咳嗽增多、痰变黄变多、喘加重），可能需要用抗生素或激素','家庭氧疗：严重患者可能需要在家吸氧，每天至少15小时'],warning:'如果出现：喘不上气、嘴唇或指甲发紫、痰突然变多变黄、发烧、意识模糊——这可能是急性加重，需要马上去医院！慢阻肺急性加重可能危及生命。'},
+{id:'asthma',category:'respiratory',icon:'💨',iconClass:'respiratory',name:'支气管哮喘',brief:'气道对某些东西过度敏感，突然变窄导致喘不上气。',explain:'哮喘就是气道太"敏感"了，遇到某些刺激（冷空气、花粉、尘螨、烟雾等），气道会突然收缩变窄，还会分泌很多黏液，导致呼吸时发出"嘶嘶"声，喘不上气。虽然哮喘在儿童中更多见，但很多老人也有，而且老年人哮喘更容易被误认为是"年纪大了气短"。',daily:['找到并避开自己的过敏原（如花粉、尘螨、宠物毛、冷空气）','家里勤打扫，被褥经常晒，减少尘螨','注意保暖，冷天出门戴口罩','保持心情平和，情绪激动也会诱发哮喘','记录哮喘发作的时间、诱因、严重程度','准备一个峰流速仪，每天测肺功能'],diet:['多吃：梨、百合、银耳（润肺）','多吃：深海鱼（含Omega-3，有助于减轻气道炎症）','少吃：过冷过辣的食物（刺激气道）','少喝酒，酒精可能诱发哮喘','适当补充维生素D','运动：适度运动有好处，但运动前要做好热身','游泳是很好的运动（湿润的空气对气道友好），但要避开含氯太重的泳池'],medication:['哮喘药物分两种：控制药（每天用，预防发作）和缓解药（发作时用）','吸入激素是控制哮喘的主要药物，不要一听"激素"就害怕，吸入的激素很安全','缓解药（如沙丁胺醇）随身携带，发作时立即使用','学会正确使用吸入器，用完后要漱口','不要自己停药，即使很久没发作也要问医生'],warning:'如果使用缓解药后20分钟仍不缓解、说话不成句、嘴唇发紫、大汗淋漓——这是哮喘严重发作，有生命危险，马上打120！'},
+{id:'sleepapnea',category:'respiratory',icon:'😴',iconClass:'respiratory',name:'睡眠呼吸暂停',brief:'睡觉时呼吸反复暂停，打呼噜声音很大，白天困得不行。',explain:'睡眠呼吸暂停就是睡觉的时候，喉咙的肌肉太松弛，把气道堵住了，呼吸会停十几秒甚至更久，然后身体缺氧被"憋醒"，一晚上反反复复几十次甚至几百次。患者自己往往不知道，只觉得白天特别困。这个病不只是影响睡眠，还会导致高血压、心脏病、中风、糖尿病。',daily:['如果打呼噜很响且有憋气现象，让家人帮忙观察或录音','侧卧睡觉，仰卧时舌头和软腭更容易堵住气道','减肥！体重减轻10%，呼吸暂停可减少25%以上','睡前不喝酒、不吃安眠药（这些会让喉咙肌肉更松弛）','戒烟，吸烟会让上呼吸道肿胀','白天不要长时间坐着，多活动'],diet:['和减肥饮食一致：少油少糖，多吃蔬菜粗粮','晚餐不要吃太饱，睡前3小时不进食','避免高脂肪食物，肥胖是主要原因','运动：每天30-40分钟有氧运动，快走、游泳、骑车','坚持运动配合饮食控制，减重效果最好'],medication:['目前没有特效药治疗睡眠呼吸暂停','中重度患者最有效的治疗是使用呼吸机（CPAP），睡觉时戴着','呼吸机需要适应，但用习惯后白天精神会明显改善','口腔矫治器对轻中度患者可能有效','不要相信"止鼾喷雾""止鼾贴"等产品，大多没效果'],warning:'如果白天极度嗜睡（开车等红灯都能睡着）、早晨头痛、记忆力明显下降、睡觉时呼吸暂停超过1分钟——这些都是严重缺氧的信号，必须去医院做睡眠监测检查。'},
+{id:'parkinson',category:'nerve',icon:'🤝',iconClass:'nerve',name:'帕金森病',brief:'大脑里控制运动的细胞慢慢减少，导致手抖、动作慢、身体僵硬。',explain:'帕金森病是因为大脑里生产"多巴胺"的细胞坏死了。多巴胺就像身体的"润滑油"，没有了它，动作就变得生硬、缓慢。典型表现是手抖（安静时抖得厉害，做事时反而不抖）、动作变慢（走路小碎步、转身困难）、身体僵硬、面部表情少（面具脸）。这不是正常衰老，需要治疗。',daily:['保持活动！越不动越僵硬，每天坚持做些力所能及的事','走路时注意抬高脚、迈大步，防止小碎步导致摔倒','家里过道要宽敞，卫生间装扶手，地上不要有障碍物','穿防滑鞋，不要穿拖鞋走路','保持大便通畅，帕金森患者容易便秘','家人要多些耐心，患者动作慢不是故意的'],diet:['多吃：蔬菜、水果、粗粮（预防便秘）','适量吃：鱼、鸡、蛋、豆制品（补充蛋白质）','注意：高蛋白食物可能影响左旋多巴类药物吸收，最好在服药前后1小时避免大量蛋白质','多喝水，保持大便通畅','运动：太极是最好的运动之一，改善平衡能力','散步、原地踏步、伸展运动、面部表情练习都有帮助'],medication:['左旋多巴（美多芭）是主要药物，补充大脑缺少的多巴胺','药物要按时吃，不能随意加减或停药','长期用药可能出现"开关现象"（药效时好时坏），这是正常的，告诉医生调整方案','不要自行加药，过量会引起不自主扭动','定期复诊，医生会根据病情调整用药'],warning:'如果出现：突然不能动了、严重幻觉或精神混乱、吞咽困难导致呛咳、反复摔倒——这些需要及时就医。如果摔倒后髋部疼痛不能动，可能是骨折，马上打120。'},
+{id:'insomnia',category:'nerve',icon:'🌙',iconClass:'nerve',name:'失眠症',brief:'入睡困难、睡眠浅、早醒，白天没精神，长期失眠影响全身健康。',explain:'失眠不是"想太多"，而是一种需要重视的健康问题。老年人睡眠本来就比年轻人浅，但如果长期入睡困难（躺床上超过30分钟睡不着）、半夜频繁醒来、天不亮就醒再也睡不着，而且白天精神很差，就可能是失眠症。原因很多：焦虑、疼痛、夜尿多、药物副作用等。',daily:['建立规律的作息：每天固定时间上床和起床，即使周末也一样','睡前1小时不看手机电视，蓝光会抑制褪黑素分泌','卧室要安静、黑暗、凉爽','白天适当晒太阳，有助于晚上褪黑素分泌','下午3点以后不喝浓茶、咖啡','睡不着不要硬躺，起来做些放松的事，困了再回去睡'],diet:['晚餐不要吃太饱太油腻','睡前可以喝杯温牛奶或蜂蜜水（有助于放松）','多吃：小米、香蕉、核桃（含色氨酸，帮助睡眠）','少吃：辣椒、大蒜等刺激性食物（晚餐时）','绝对不要靠喝酒助眠！酒精虽然让人容易入睡，但后半夜会频繁醒来','运动：白天适度运动（散步、太极），但睡前2小时内不要剧烈运动'],medication:['不要自己长期吃安眠药！安眠药容易产生依赖','如果短期需要用药，在医生指导下使用，一般不超过2-4周','褪黑素对部分老年人可能有效，但不是所有人都适合','有些降压药、激素类药物会影响睡眠，如果怀疑药物引起，告诉医生','认知行为疗法是治疗失眠最有效的方法之一，比安眠药更安全'],warning:'如果失眠伴随情绪极度低落、对什么都不感兴趣、甚至有轻生念头——这可能是抑郁症，需要尽快看精神科或心理科医生。'},
+{id:'osteoarthritis',category:'bone',icon:'🦵',iconClass:'bone',name:'骨关节炎',brief:'关节里的"软垫"磨损了，骨头磨骨头，走路疼、上下楼更疼。',explain:'关节里的软骨就像骨头之间的"软垫子"。用了几十年，这个垫子慢慢磨薄了甚至磨没了，骨头直接磨骨头，就会疼痛、肿胀、活动受限。最常见的是膝盖，其次是手指、髋关节。这不是"发炎"为主，而是"磨损"为主，所以叫骨关节炎。胖的人膝盖负担大，更容易得。',daily:['保护关节：避免长时间蹲着、跪着、爬楼梯、提重物','用拐杖或手杖分担体重，减轻膝盖负担','注意保暖，冷天戴护膝','穿软底、有支撑的鞋，不要穿硬底鞋或高跟鞋','控制体重，减重5公斤，膝盖压力可减少20公斤','不要因为疼就完全不动，关节会越来越僵硬'],diet:['多吃：深海鱼（含Omega-3，有助减轻炎症）','多吃：牛奶、豆制品、绿叶蔬菜（补钙强骨）','适量吃：骨头汤、鸡爪、猪蹄（含胶原蛋白，但脂肪也高，别吃太多）','少吃：高糖高脂食物（会加重炎症）','运动：游泳、骑自行车是最好的运动（关节不负重）','直腿抬高、靠墙半蹲等力量训练，增强大腿肌肉保护膝盖'],medication:['止痛药首选外用的（膏药、凝胶），副作用最小','口服止痛药（如布洛芬）在疼痛严重时短期使用，饭后吃保护胃','氨基葡萄糖和软骨素的效果因人而异，可以试试，但不要期望太高','关节腔注射玻璃酸钠（"打润滑剂"）对部分患者有效','严重的骨关节炎可能需要做关节置换手术，这是很成熟的手术'],warning:'如果关节突然又红又肿又热又痛、不能碰——可能是急性炎症发作或痛风，需要就医。如果关节"卡住"不能动、或者走路时膝盖突然"软"了一下，也要看医生。'},
+{id:'cervical',category:'bone',icon:'🔧',iconClass:'bone',name:'颈椎病',brief:'脖子里的"零件"老化了，引起脖子疼、手麻、头晕等一系列问题。',explain:'颈椎就是脖子里的骨头，中间有脊髓穿过，旁边有神经和血管。长期低头、姿势不好，颈椎之间的"垫片"（椎间盘）会突出，骨头会长"骨刺"，压迫到神经就会手麻手疼，压迫到血管就会头晕。现在老人看手机越来越多，颈椎病也越来越普遍。',daily:['少低头！看手机时把手机举到眼睛高度','看电视时坐直，不要半躺在沙发上歪着脖子','睡觉枕头不要太高，约自己拳头高度','注意颈部保暖，冷风直吹会加重症状','不要突然转头或甩头，动作要慢','工作或看书每40分钟起来活动一下脖子'],diet:['多吃：豆制品、鱼虾、坚果（含钙和蛋白质，对骨骼好）','多吃：黑芝麻、核桃（中医认为补肾强骨）','少吃：辛辣刺激食物（可能加重炎症）','运动：做"米"字操——用下巴慢慢写"米"字','耸肩、扩胸运动，放松肩颈肌肉','放风筝、打羽毛球（仰头动作对颈椎好）','注意：如果手麻或头晕严重，先看医生再决定做什么运动'],medication:['止痛药和肌肉松弛药可以短期缓解症状','神经营养药（如甲钴胺）对神经压迫引起的手麻可能有帮助','不要随便找人"扳脖子""正骨"，操作不当可能造成严重后果','牵引治疗需在医院进行，不要自己买牵引器在家乱拉'],warning:'如果出现：走路不稳像踩棉花、大小便困难、手脚无力越来越重——可能是脊髓受压严重，需要尽快就医，可能需要手术。突然眩晕、视物旋转也要及时就医。'},
+{id:'lumbar',category:'bone',icon:'🔩',iconClass:'bone',name:'腰椎间盘突出',brief:'腰里的"垫片"挤出来了，压到神经，腰疼腿麻。',explain:'腰椎之间的椎间盘就像软垫，外面是一圈纤维环，里面是胶状的髓核。如果纤维环破裂，髓核被挤出来压到神经根，就会引起腰痛，更典型的是疼痛从屁股一直放射到大腿、小腿甚至脚上（坐骨神经痛）。弯腰、咳嗽、打喷嚏时疼痛加重。',daily:['不要弯腰搬东西！正确姿势：先蹲下，保持腰背挺直，用腿的力量站起来','避免久坐，每坐30-40分钟起来活动一下','睡硬板床，不要太软的床垫','注意腰部保暖，寒冷会使肌肉痉挛加重疼痛','打喷嚏或咳嗽时用手扶住腰','急性发作时多休息，但不要长期卧床（超过3天反而不好）'],diet:['多吃：牛奶、豆制品、鱼虾（补钙补蛋白）','多吃：蔬菜水果（保持大便通畅，便秘时用力排便会加重腰痛）','控制体重，肚子大会增加腰椎负担','运动：急性期以休息为主','缓解期：游泳（尤其是仰泳和蛙泳）、倒走（注意安全）、五点支撑法','小燕飞动作（趴在床上抬头抬腿）有助于锻炼腰背肌肉','避免：仰卧起坐、弯腰摸脚尖、打高尔夫等旋转腰部的运动'],medication:['急性期：消炎止痛药（如布洛芬）+肌肉松弛药','神经营养药（如甲钴胺）有助于神经恢复','大部分腰椎间盘突出不需要手术，通过保守治疗可以好转','不要轻信"一针复位""祖传手法"能"按回去"','如果保守治疗3-6个月无效且疼痛严重影响生活，再考虑手术'],warning:'如果出现：大小便困难或失禁、大腿内侧麻木（"马鞍区"麻木）——这是马尾神经受压，属于急症，需要尽快手术，否则可能造成永久性损伤！'},
+{id:'cancer-screening',category:'tumor',icon:'🔬',iconClass:'tumor',name:'常见肿瘤早筛指南',brief:'癌症不可怕，可怕的是发现太晚。定期筛查能救命。',explain:'癌症不是一天长出来的，从第一个癌细胞到能被检查出来，往往要几年甚至十几年。早期癌症大多数可以治愈，晚期就难了。所以定期筛查非常重要！不同癌症筛查方法不同，不要以为体检抽个血就能查出所有癌症。以下针对中老年最常见的几种癌症，告诉您该做什么检查。',daily:['肺癌：长期吸烟者（每天一包抽了30年以上），建议每年做一次低剂量螺旋CT','胃癌/食管癌：有胃病史或家族史者，每2-3年做一次胃镜','肠癌：50岁以上所有人，建议做一次肠镜，没问题的话5-10年后再做','肝癌：有乙肝/丙肝/肝硬化者，每6个月做一次B超+抽血查甲胎蛋白','乳腺癌：女性每年做一次乳腺B超，40岁以上加做钼靶','宫颈癌：女性每3-5年做一次TCT+HPV检查','前列腺癌：男性50岁以上，每年抽血查PSA'],diet:['多吃：新鲜蔬菜水果、全谷物（富含抗氧化物质和纤维）','多吃：十字花科蔬菜（西兰花、卷心菜、菜花）','少吃：加工肉（火腿、培根、腊肉——被列为致癌物）','少吃：烧烤、油炸、腌制食品','不要吃发霉的食物（尤其是发霉的花生玉米，含强致癌物黄曲霉素）','不要喝太烫的汤和水（65度以上热饮被列为可能致癌物）','运动：每周至少150分钟中等强度运动','运动可以降低多种癌症风险'],medication:['不要相信"防癌保健品"，没有哪种保健品被证实能防癌','阿司匹林可能降低肠癌风险，但需医生评估（有出血风险）','乙肝疫苗可以预防乙肝→肝硬化→肝癌，没打过的可以补打','HPV疫苗不只是年轻人的事，中老年女性也可以考虑'],warning:'癌症的早期信号：不明原因的消瘦（半年内体重下降超过10%）、长期低烧、身体某处摸到硬块、大便习惯改变或便血、吞咽困难、声音嘶哑超过3周、皮肤上的痣突然变大变色——出现这些情况要及时就医检查，不要拖！'},
+{id:'depression',category:'mental',icon:'💙',iconClass:'mental',name:'老年抑郁症',brief:'不是"想开点"就能解决的，是大脑生病了，需要治疗。',explain:'抑郁症不是心情不好，不是"想太多"，而是大脑里的化学物质失衡了，是一种真实的疾病。老年人抑郁症很常见，但常常被忽视，以为是"年纪大了脾气怪"。表现为：持续的情绪低落、对什么都提不起兴趣、吃不下睡不着、觉得自己没用是负担。这不是矫情，是需要治疗的病。',daily:['不要一个人闷着，多和人交流，哪怕只是出门走走','保持规律的生活作息，按时吃饭睡觉','做自己喜欢的事：养花、下棋、听戏、广场舞','家人要多关心，不要对老人说"你就是想太多"','晒太阳！每天户外晒太阳15-30分钟，有助于改善情绪','设定小目标：今天出门走10分钟、给老朋友打个电话'],diet:['多吃：深海鱼、核桃（含Omega-3，对大脑有益）','多吃：香蕉、全麦面包（含色氨酸，帮助合成"快乐物质"血清素）','适量吃：黑巧克力（可可含量70%以上）','补充B族维生素，尤其是叶酸和B12','运动：运动是最好的"抗抑郁药"之一','每天散步30分钟，坚持下来效果不亚于吃药','太极、广场舞、游泳都很好'],medication:['抗抑郁药需要医生开，不能自己买','抗抑郁药起效慢，一般要吃2-4周才开始见效，不要着急','即使感觉好了也要继续吃，一般需要吃6-12个月','不要突然停药，要在医生指导下慢慢减量','抗抑郁药不是"让人变傻的药"，不会上瘾','如果出现自杀念头，要立即告诉家人和医生'],warning:'如果老人出现：反复说"活着没意思""不想活了"、把后事都交代好、突然变得异常平静（可能是决定自杀后的"平静"）——这是非常危险的信号，必须24小时有人陪伴，并尽快带去看精神科医生！'},
+{id:'anxiety',category:'mental',icon:'😰',iconClass:'mental',name:'焦虑症',brief:'过度的担心和紧张，心慌、手抖、坐立不安，影响日常生活。',explain:'适度的担心是正常的，但焦虑症是过度、失控的担心。老人可能整天担心自己的健康、担心子女、担心没钱，明明知道没必要但控制不住。身体也会出现各种不适：心慌、胸闷、手抖、出汗、头晕、肚子不舒服，去检查又查不出大问题。这不是"瞎操心"，是需要治疗的心理疾病。',daily:['学习腹式呼吸：鼻子慢慢吸气4秒，憋住2秒，嘴巴慢慢呼气6秒','焦虑发作时，告诉自己"这只是焦虑，不会死，会过去的"','减少咖啡、浓茶摄入，咖啡因会加重焦虑','保证充足睡眠，睡眠不足会让焦虑加重','把担心的事情写在纸上，理性分析哪些是真的需要担心的','不要整天查百度看病情，越查越焦虑'],diet:['多吃：绿叶蔬菜、全谷物（含B族维生素和镁，有助于放松神经）','多吃：香蕉、牛奶（含色氨酸）','少吃：咖啡、浓茶、酒精（看似放松，实则加重焦虑）','避免低血糖：定时吃饭，不要饿太久（低血糖会诱发焦虑）','运动：快走、慢跑、游泳（有氧运动是最好的抗焦虑方法）','瑜伽和太极结合了运动和呼吸训练，效果很好'],medication:['抗焦虑药分两种：快速缓解的（如阿普唑仑）和长期控制的（如舍曲林）','快速缓解的药容易产生依赖，只能在医生指导下短期使用','长期控制的药（SSRI类）不会上瘾，但需要坚持吃','药物治疗需要时间，一般2-4周开始起效','心理治疗（认知行为疗法）对焦虑症效果很好，可以和药物结合'],warning:'如果焦虑严重到不敢出门、不敢一个人待着、反复去医院急诊但检查都正常——说明焦虑已经严重影响生活，需要看精神科。如果出现胸痛、濒死感，虽然可能是"惊恐发作"，但也要先排除心脏病。'},
+{id:'cataract',category:'sensory',icon:'👁️',iconClass:'sensory',name:'白内障',brief:'眼睛里的"镜头"变混浊了，看东西像隔着一层毛玻璃。',explain:'眼睛里的晶状体就像照相机的镜头，本来是透明的。随着年龄增长，这个"镜头"慢慢变混浊了，光线进不去，看东西就越来越模糊，像隔着一层雾。白内障是老年人最常见的眼病，80岁以上几乎人人都有不同程度的白内障。好消息是，白内障手术非常成熟，效果很好。',daily:['出门戴太阳镜，紫外线会加速白内障发展','控制好血糖，糖尿病患者白内障发生早、发展快','不要长时间看手机，注意用眼卫生','如果视力下降影响走路、看电视、认人脸，就该考虑手术了','不要等白内障"熟透了"再做手术，现在技术不需要等'],diet:['多吃：胡萝卜、南瓜、玉米、蛋黄（含叶黄素和玉米黄质，保护眼睛）','多吃：蓝莓、西兰花、菠菜（抗氧化）','多吃：橙子、猕猴桃（补充维生素C）','少吃：高糖食物（血糖高会加速白内障）','运动：适度运动有好处，但注意安全，视力不好时防止摔倒'],medication:['目前没有任何眼药水或药物能治好白内障，唯一有效的治疗是手术','不要相信"点眼药水能治好白内障"的广告','白内障手术是微创手术，一般10-20分钟就做完，不用住院','手术后按医嘱点眼药水，不要揉眼睛，定期复查'],warning:'如果视力突然明显下降、眼睛剧烈疼痛、眼红、恶心呕吐——可能不是单纯白内障，可能是青光眼急性发作，需要立刻去眼科急诊！'},
+{id:'hearingloss',category:'sensory',icon:'👂',iconClass:'sensory',name:'老年性耳聋',brief:'听力慢慢下降，听不清别人说话，容易造成社交孤立。',explain:'老年性耳聋是耳朵里的听觉细胞随着年龄增长自然退化，就像头发变白一样。最开始是听不清高音（如女人和孩子的声音、电话铃声），在嘈杂环境中听不清对话。很多老人因为听不清就不愿意和人交流，慢慢变得孤僻，甚至被误认为是"老年痴呆"。',daily:['如果发现自己经常要求别人重复说话、电视音量越开越大，建议去查听力','不要用棉签或挖耳勺掏耳朵，容易损伤耳道和鼓膜','避免长时间待在噪音环境中（如广场舞音响旁边）','和人说话时请对方看着你说，配合口型和表情更容易理解','家人和老人说话时不要吼，声音大不等于听得清，放慢语速更有效'],diet:['多吃：深海鱼、坚果（含Omega-3，有助保护听觉神经）','多吃：绿叶蔬菜、香蕉（含叶酸和钾，对内耳有益）','少吃：高盐高脂食物（影响内耳血液循环）','运动：适度运动有助于改善全身血液循环，包括内耳'],medication:['听力下降严重时，及时配助听器！不要觉得"戴助听器就是老了"','助听器需要专业验配，不要随便买几十块钱的"声音放大器"','助听器需要适应期，大脑需要时间重新学习处理放大的声音','有些药物会损害听力（如某些抗生素、利尿剂），用药时注意','如果突然一只耳朵听力明显下降，可能是突发性耳聋，需要尽快治疗'],warning:'如果突然一只耳朵听力大幅下降（尤其是几天内）、伴有耳鸣或眩晕——可能是突发性耳聋，是耳科急症，越早治疗效果越好，最好在72小时内就医！'},
+{id:'bph',category:'urinary',icon:'🚹',iconClass:'urinary',name:'前列腺增生',brief:'前列腺变大压迫尿道，导致排尿困难、尿频、夜尿多。',explain:'前列腺是男性特有的器官，在膀胱出口处包着尿道。年纪大了前列腺会增生变大，压迫尿道，就像用手捏住水管一样。症状包括：尿频（尤其是夜尿多）、尿急（有了尿意就憋不住）、尿等待（站在马桶前等半天才尿出来）、尿线细、尿不尽。这不是"肾虚"，是前列腺增生。',daily:['不要憋尿！有尿意就去，憋尿会让膀胱受损','白天多喝水，睡前2小时少喝水，减少夜尿','少喝浓茶、咖啡、酒（刺激膀胱，加重尿频）','注意保暖，受凉会加重排尿困难','保持大便通畅，便秘会压迫前列腺','避免久坐，每坐1小时起来活动一下'],diet:['多吃：西红柿（煮熟的番茄红素对前列腺有益）、南瓜子','多吃：蔬菜水果、粗粮（保持大便通畅）','少吃：辣椒、大蒜等刺激性食物（刺激前列腺充血）','少吃：肥肉、油炸食品','运动：散步、慢跑、太极都有好处','做提肛运动（收缩肛门再放松），增强盆底肌肉'],medication:['α受体阻滞剂（如坦索罗辛）可松弛尿道，改善排尿','5α还原酶抑制剂（如非那雄胺）可缩小前列腺体积，但起效慢','两种药有时需要联合使用','服药期间注意：α受体阻滞剂可能引起头晕，起夜时动作要慢','如果吃药效果不好或出现反复尿路感染、尿潴留，可能需要手术','现在的微创手术恢复快，不用太担心'],warning:'如果突然完全尿不出来（急性尿潴留）——膀胱胀痛难忍，这是急症，马上去医院导尿！如果出现血尿、尿痛伴发烧，也要及时就医。'},
+{
+    id: 'fattyliver', category: 'stomach', icon: '🫄', iconClass: 'stomach',
+    name: '脂肪肝',
+    brief: '肝脏里堆积了太多脂肪，是最常见的肝病，很多人是在体检时发现的。',
+    explain: '肝脏是人体的"化工厂"，正常情况下肝脏里也有少量脂肪。但如果脂肪堆积太多（超过肝脏重量的5%），就成了脂肪肝。主要原因有：吃得太油腻、喝酒太多、肥胖、糖尿病。大多数脂肪肝没有明显症状，但如果不控制，可能发展成肝炎、肝硬化，甚至肝癌。好消息是，早期脂肪肝是完全可以逆转的！',
+    daily: ['减肥是第一要务！体重下降5%-10%，脂肪肝就能明显改善','戒酒！酒精是脂肪肝的重要原因，哪怕只是"少量饮酒"','控制好血糖和血脂，糖尿病和高血脂常常和脂肪肝共存','不要乱吃"保肝"保健品，很多反而伤肝','每年做一次肝脏B超和肝功能检查，跟踪变化'],
+    diet: ['多吃：绿叶蔬菜、燕麦、荞麦、豆制品、深海鱼','少吃：肥肉、油炸食品、甜饮料、蛋糕点心（高糖高脂的都要控制）','水果也要适量，果糖太多也会转化为肝脏脂肪','主食不要只吃精米白面，加一半粗粮','运动：快走、慢跑、游泳、骑车，每次40分钟以上','每周至少运动5天，坚持3-6个月才能看到效果'],
+    medication: ['目前没有专门治疗脂肪肝的特效药','关键是改变生活方式：减肥+运动+健康饮食','如果同时有高血脂或糖尿病，要按医嘱吃相应药物','维生素E可能对部分患者有帮助，但要医生评估后使用','不要相信"排毒养肝""护肝神药"之类的虚假宣传'],
+    warning: '如果出现：右上腹持续隐痛、皮肤或眼白发黄、不明原因的乏力、食欲严重下降——这些可能提示脂肪肝已经发展成肝炎或肝硬化，需要尽快就医。'
+  },
+{
+    id: 'gallstone', category: 'stomach', icon: '🪨', iconClass: 'stomach',
+    name: '胆结石',
+    brief: '胆囊里长了"石头"，平时可能没感觉，但一旦卡住就会剧烈疼痛。',
+    explain: '胆囊是储存胆汁的小袋子，胆汁帮助消化脂肪。如果胆汁里的成分失衡（胆固醇太多或胆汁排不出去），就会结晶形成"石头"。小的像沙子，大的像鸡蛋。很多老人有胆结石但不知道，直到石头卡在胆管里引起剧痛才发现。女性、肥胖、40岁以上是高发人群。',
+    daily: ['按时吃早餐！空腹时间太长，胆汁在胆囊里浓缩容易形成结石','控制体重，但减肥不要太快，快速减肥反而容易长结石','少食多餐，避免暴饮暴食','如果已经查出有胆结石，注意观察有没有疼痛发作','避免长时间空腹或极低热量饮食'],
+    diet: ['多吃：蔬菜、水果、全谷物、豆类（高纤维帮助排胆汁）','适量吃：坚果、橄榄油（好的脂肪刺激胆囊正常收缩）','少吃：肥肉、油炸食品、动物内脏、奶油蛋糕（高脂肪诱发胆囊收缩疼痛）','少吃：甜食、含糖饮料（高糖增加结石风险）','运动：适度运动有助于胆囊排空，散步、太极都很好','饭后不要马上躺着，稍微活动一下'],
+    medication: ['没有症状的胆结石一般不需要吃药或手术','如果疼痛发作，医生可能会用止痛药和解痉药','熊去氧胆酸可以帮助溶解小的胆固醇结石，但需要长期吃','不要相信"排石汤""化石偏方"，可能让石头卡住更危险','如果反复发作，医生可能会建议做胆囊切除手术，这是成熟安全的手术'],
+    warning: '如果出现：右上腹剧烈疼痛（尤其是吃完油腻食物后）、疼痛放射到右肩或后背、发烧发冷、眼白发黄——这可能是急性胆囊炎或胆管堵塞，必须马上去医院！严重时可危及生命。'
+  }
+];
+// ── 应用逻辑 ──
+
+const container = document.getElementById('diseaseContainer');
+const searchInput = document.getElementById('searchInput');
+const categoryNav = document.getElementById('categoryNav');
+const backToTop = document.getElementById('backToTop');
+
+let currentCategory = 'all';
+let searchQuery = '';
+
+// ── 渲染疾病卡片 ──
+function renderDiseases() {
+  let filtered = diseases;
+
+  // 分类过滤
+  if (currentCategory !== 'all') {
+    filtered = filtered.filter(d => d.category === currentCategory);
+  }
+
+  // 搜索过滤
+  if (searchQuery.trim()) {
+    const q = searchQuery.trim().toLowerCase();
+    filtered = filtered.filter(d => {
+      const searchText = (d.name + d.brief + d.explain + d.daily.join('') + d.diet.join('') + d.medication.join('') + d.warning).toLowerCase();
+      return searchText.includes(q);
+    });
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        <span class="no-icon">🔎</span>
+        <p>没有找到相关内容</p>
+        <p style="font-size:0.82rem;margin-top:4px;">试试换个关键词，或者选择其他分类</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(d, i) {
+    var cardHtml = '<div class="disease-section" style="animation-delay:' + (i * 0.06) + 's" data-id="' + d.id + '"><div class="disease-card" id="card-' + d.id + '"><div class="disease-header" onclick="toggleCard(\'' + d.id + '\')"><div class="disease-icon ' + d.iconClass + '">' + d.icon + '</div><div class="disease-header-left"><div class="disease-name">' + d.name + '</div><div class="disease-brief">' + d.brief + '</div></div><div class="expand-indicator">▼</div></div><div class="disease-detail"><div class="detail-inner"><div class="info-block explain"><div class="info-block-title"><span class="dot"></span>这是什么病？（通俗解释）</div><p>' + d.explain + '</p></div><div class="info-block daily"><div class="info-block-title"><span class="dot"></span>日常注意事项和自我管理</div><ul>' + d.daily.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul></div><div class="info-block diet"><div class="info-block-title"><span class="dot"></span>饮食和运动建议</div><ul>' + d.diet.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul></div><div class="info-block medication"><div class="info-block-title"><span class="dot"></span>用药指导和注意事项</div><ul>' + d.medication.map(function(item) { return '<li>' + item + '</li>'; }).join('') + '</ul></div><div class="info-block warning"><div class="info-block-title"><span class="dot"></span>⚠️ 需要就医的预警信号</div><div class="warning-alert"><span class="alert-icon">🚨</span><span>' + d.warning + '</span></div></div></div></div></div></div>';
+    if ((i + 1) % 5 === 0 && i < filtered.length - 1) {
+      cardHtml += '<div class="ad-placeholder feed">📢 广告位 640×60</div>';
+    }
+    return cardHtml;
+  }).join('');
+  
+  // 为每个疾病卡片添加语音朗读按钮
+  container.querySelectorAll('.disease-header-left').forEach(function(el) {
+    var section = el.closest('.disease-section');
+    if (!section) return;
+    var diseaseId = section.dataset.id;
+    if (!document.getElementById('speak-btn-' + diseaseId)) {
+      var btn = document.createElement('button');
+      btn.id = 'speak-btn-' + diseaseId;
+      btn.className = 'speak-btn';
+      btn.textContent = '🔊 听语音';
+      btn.title = '语音朗读';
+      btn.onclick = function(e) { e.stopPropagation(); doSpeak(diseaseId); };
+      el.appendChild(btn);
+    }
+  });
+}
+
+// ── 展开/收起卡片 ──
+function toggleCard(id) {
+  var card = document.getElementById('card-' + id);
+  var isExpanded = card.classList.contains('expanded');
+  document.querySelectorAll('.disease-card.expanded').forEach(function(c) {
+    if (c.id !== 'card-' + id) c.classList.remove('expanded');
+  });
+  if (isExpanded) {
+    card.classList.remove('expanded');
+    document.getElementById('topArea').classList.remove('collapsed');
+    document.getElementById('categoryNav').classList.remove('collapsed');
+    document.getElementById('minibar').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    card.classList.add('expanded');
+    var d = diseases.find(function(dd) { return dd.id === id; });
+    document.getElementById('minibarTitle').textContent = d ? d.name : '';
+    document.getElementById('topArea').classList.add('collapsed');
+    document.getElementById('categoryNav').classList.add('collapsed');
+    document.getElementById('minibar').classList.add('visible');
+    setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+// ── 分类切换 ──
+categoryNav.addEventListener('click', (e) => {
+  const btn = e.target.closest('.category-btn');
+  if (!btn) return;
+
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+    currentCategory = btn.dataset.category;
+  renderDiseases();
+});
+
+// ── 搜索 ──
+let searchTimer;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQuery = searchInput.value;
+    renderDiseases();
+  }, 300);
+});
+
+// ── 回到顶部 ──
+function updateBackToTop() {
+  if (window.scrollY > 500) {
+    backToTop.classList.add('visible');
+  } else {
+    backToTop.classList.remove('visible');
+  }
+}
+
+window.addEventListener('scroll', updateBackToTop, { passive: true });
+
+backToTop.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// 返回按钮 - 收起卡片恢复顶部
+(function() {
+  var backBtn = document.getElementById('backBtn');
+  if (backBtn) {
+    backBtn.addEventListener('click', function() {
+      var expandedCard = document.querySelector('.disease-card.expanded');
+      if (expandedCard) {
+        var cardId = expandedCard.id.replace('card-', '');
+        toggleCard(cardId);
+      }
+    });
+  }
+})();
+
+// ── 初始渲染 ──
+renderDiseases();
+
+
+
+// ========== 语音搜索 ==========
+const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+const voiceStatus = document.getElementById("voiceStatus");
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isListening = false;
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = "zh-CN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.onstart = function() {
+    isListening = true;
+    voiceSearchBtn.classList.add("listening");
+    voiceSearchBtn.textContent = "🔴";
+    voiceStatus.textContent = "正在听您说话…";
+  };
+  recognition.onresult = function(event) {
+    var transcript = event.results[0][0].transcript.trim();
+    searchInput.value = transcript;
+    searchQuery = transcript;
+    renderDiseases();
+    voiceStatus.textContent = "已识别：" + transcript;
+    setTimeout(function() {
+      var firstCard = document.querySelector(".disease-card");
+      if (firstCard) {
+        var cardId = firstCard.id.replace("card-", "");
+        toggleCard(cardId);
+      }
+    }, 500);
+  };
+  recognition.onerror = function(event) {
+    voiceStatus.textContent = "语音识别失败：" + (event.error === "not-allowed" ? "请允许使用麦克风" : "请重试");
+    stopListening();
+  };
+  recognition.onend = function() { stopListening(); };
+  voiceSearchBtn.addEventListener("click", function() {
+    if (isListening) { recognition.stop(); }
+    else { voiceStatus.textContent = ""; recognition.start(); }
+  });
+} else {
+  voiceSearchBtn.style.display = "none";
+}
+
+function stopListening() {
+  isListening = false;
+  voiceSearchBtn.classList.remove("listening");
+  voiceSearchBtn.textContent = "🎤";
+}
+
+// ========== 语音朗读 ==========
+
+
+// 重写 renderDiseases，添加朗读按钮
+var _origRender = renderDiseases;
+renderDiseases = function() {
+  _origRender();
+  document.querySelectorAll(".disease-name").forEach(function(el) {
+    var section = el.closest(".disease-section");
+    if (!section) return;
+    var diseaseId = section.dataset.id;
+    if (!document.getElementById("speak-btn-" + diseaseId)) {
+      var btn = document.createElement("button");
+      btn.id = "speak-btn-" + diseaseId;
+      btn.className = "speak-btn";
+      btn.textContent = "🔊 听语音";
+      btn.title = "语音朗读";
+      btn.onclick = function(e) { e.stopPropagation(); doSpeak(diseaseId); };
+      el.appendChild(btn);
+    }
+  });
+};
+
+// ========== 语音朗读（使用预生成音频，微信/所有浏览器兼容） ==========
+var currentAudio = null;
+function doSpeak(diseaseId) {
+  var btn = document.getElementById("speak-btn-" + diseaseId);
+  if (!btn) return;
+  
+  // 如果正在播放同一个，则停止
+  if (currentAudio && currentAudio.dataset.diseaseId === diseaseId && !currentAudio.paused) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    btn.classList.remove("speaking");
+    btn.textContent = "🔊 听语音";
+    return;
+  }
+  
+  // 停止之前的播放
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    var prevBtn = document.getElementById("speak-btn-" + currentAudio.dataset.diseaseId);
+    if (prevBtn) { prevBtn.classList.remove("speaking"); prevBtn.textContent = "🔊 听语音"; }
+  }
+  
+  var audio = new Audio();
+  audio.dataset.diseaseId = diseaseId;
+  audio.src = "audio/" + diseaseId + ".mp3";
+  audio.preload = "auto";
+  document.body.appendChild(audio);
+  btn.classList.add("speaking");
+  btn.textContent = "🔊 朗读中…";
+  
+  audio.oncanplaythrough = function() {
+    audio.play().catch(function(e) {
+      btn.classList.remove("speaking");
+      btn.textContent = "🔊 听语音";
+      currentAudio = null;
+      console.log('Play error:', e.message);
+    });
+  };
+  
+  audio.onended = function() {
+    btn.classList.remove("speaking");
+    btn.textContent = "🔊 听语音";
+    currentAudio = null;
+  };
+  audio.onerror = function(e) {
+    btn.classList.remove("speaking");
+    btn.textContent = "🔊 听语音";
+    currentAudio = null;
+    console.log('Audio error:', audio.error);
+  };
+  
+  currentAudio = audio;
+}
+
+// ========== PWA: Service Worker + Install ==========
+(function() {
+  // Manifest via blob
+  var manifest = {
+    name: '健康掌中宝',
+    short_name: '健康掌中宝',
+    description: '中老年常见病健康指南',
+    start_url: '.',
+    display: 'standalone',
+    background_color: '#FDF8F0',
+    theme_color: '#7A9B7E',
+    orientation: 'portrait',
+    icons: [{ src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#7A9B7E"/><text x="50" y="68" text-anchor="middle" font-size="52">❤️</text></svg>'), sizes: '192x192', type: 'image/svg+xml' }]
+  };
+  var mBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+  var mUrl = URL.createObjectURL(mBlob);
+  var link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = mUrl;
+  document.head.appendChild(link);
+
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    var swCode = 'self.addEventListener("install",function(e){e.waitUntil(caches.open("health-v1").then(function(c){return c.addAll(["./"]).catch(function(){})}))});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request)}))});';
+    var swBlob = new Blob([swCode], {type: 'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(function(){});
+  }
+
+  // Install prompt (Android Chrome)
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (!isStandalone) {
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      window._pwaPrompt = e;
+      setTimeout(function() {
+        if (document.getElementById('pwa-banner')) return;
+        var bar = document.createElement('div');
+        bar.id = 'pwa-banner';
+        bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:999;background:#7A9B7E;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;font-size:0.95rem;box-shadow:0 -2px 12px rgba(0,0,0,0.15);';
+        bar.innerHTML = '<span>📱 安装到桌面，随时查看</span><button id="pwa-install-btn" style="background:#fff;color:#5A7A5E;border:none;padding:8px 18px;border-radius:20px;font-weight:700;font-size:0.9rem;cursor:pointer;">安装</button>';
+        document.body.appendChild(bar);
+        document.getElementById('pwa-install-btn').onclick = function() {
+          window._pwaPrompt.prompt();
+          window._pwaPrompt.userChoice.then(function() { bar.remove(); });
+        };
+      }, 3000);
+    });
+  }
+})();
+
+</script>
+</body>
+</html>console.log("DISEASES LOADED, count=" + diseases.length);
+
